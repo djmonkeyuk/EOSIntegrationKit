@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "OnlineSubsystemEOSTypes.h"
-#if ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
 #include "NboSerializerOSS.h"
 #else
 #include "NboSerializer.h"
@@ -15,7 +15,7 @@
 /**
  * Serializes data in network byte order form into a buffer
  */
-#if ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
 class FNboSerializeToBufferEOS : public FNboSerializeToBufferOSS
 #else
 class FNboSerializeToBufferEOS : public FNboSerializeToBuffer
@@ -24,7 +24,7 @@ class FNboSerializeToBufferEOS : public FNboSerializeToBuffer
 public:
 	/** Default constructor zeros num bytes*/
 	FNboSerializeToBufferEOS() :
-#if ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
 	FNboSerializeToBufferOSS(512)
 	{
 	}
@@ -71,7 +71,7 @@ public:
 /**
  * Class used to write data into packets for sending via system link
  */
-#if ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
 class FNboSerializeFromBufferEOS : public FNboSerializeFromBufferOSS
 #else
 class FNboSerializeFromBufferEOS : public FNboSerializeFromBuffer
@@ -82,7 +82,7 @@ public:
 	 * Initializes the buffer, size, and zeros the read offset
 	 */
 	FNboSerializeFromBufferEOS(uint8* Packet,int32 Length) :
-#if ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
 	FNboSerializeFromBufferOSS(Packet,Length)
 #else
 		FNboSerializeFromBuffer(Packet,Length)

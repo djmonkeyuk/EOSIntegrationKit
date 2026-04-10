@@ -1,4 +1,4 @@
-﻿// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -138,7 +138,7 @@ struct FEIK_OnlineSessionSettings
 		bAntiCheatProtected = Settings.bAntiCheatProtected;
 		bUseLobbiesIfAvailable = Settings.bUseLobbiesIfAvailable;
 		bUseLobbiesVoiceChatIfAvailable = Settings.bUseLobbiesVoiceChatIfAvailable;
-#if ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
 		SessionIdOverride = Settings.SessionIdOverride;
 #endif
 		BuildUniqueId = Settings.BuildUniqueId;

@@ -51,7 +51,7 @@ protected:
 			OutArray.SetNum(Samples.Num());  // Resize OutArray to match the size of Samples
 			OutArrayView = TArrayView<float>(OutArray.GetData(), Samples.Num());  // Recreate OutArrayView with the new size
 		}
-#if ENGINE_MAJOR_VERSION >= 5
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 1
 		// Convert PCM16 to float and write to OutArrayView
 		Audio::ArrayPcm16ToFloat(Samples, OutArrayView);
 #else

@@ -909,6 +909,7 @@ void FUserManagerEOS::LoginViaAuthInterface(int32 LocalUserNum, const FOnlineAcc
 	TArray<FString> BrokenTypeString;
 	EEIK_EExternalCredentialType ExternalCredentialType = EEIK_EExternalCredentialType::EIK_ECT_EPIC;
 	EEIK_ELoginCredentialType LoginCredentialType = EEIK_ELoginCredentialType::EIK_LCT_AccountPortal;
+	UE_LOG(LogEIK, Warning, TEXT("CREDENTIAL TYPE:::::: %s"), *AccountCredentials.Type);
 	if(AccountCredentials.Type.ParseIntoArray(BrokenTypeString, TEXT("_+_"), true) > 0)
 	{
 		if(BrokenTypeString.Num() > 2)
@@ -1722,6 +1723,7 @@ bool FUserManagerEOS::AutoLogin(int32 LocalUserNum)
 		return AutoLoginUsingSettings(LocalUserNum);
 	}
 	UE_LOG(LogEIK, Log, TEXT("AutoLogin: Attempting to auto login user (%d) with auth command line args"), LocalUserNum);
+	UE_LOG(LogEIK, Warning, TEXT("## (%s) ##"), *AuthType);
 	FOnlineAccountCredentials Creds(AuthType, LoginId, Password);
 	if(AuthType == "exchangecode")
 	{
@@ -1742,7 +1744,7 @@ bool FUserManagerEOS::AutoLogin(int32 LocalUserNum)
 	}
 	else if(AuthType == "accountportal")
 	{
-		Creds.Type = "eas_+_EIK_LCT_AccountPortal+_EIK_ECT_EPIC";
+		Creds.Type = "eas_+_EIK_LCT_AccountPortal_+_EIK_ECT_EPIC";
 		Creds.Token = Password;
 		Creds.Id = LoginId;
 	}
@@ -1847,7 +1849,7 @@ bool FUserManagerEOS::AutoLoginUsingSettings(int32 LocalUserNum)
 			return true;
 			break;
 		case AutoLogin_AccountPortalLogin:
-			TempDetails.Type = "eas_+_EIK_LCT_AccountPortal+_EIK_ECT_EPIC";
+			TempDetails.Type = "eas_+_EIK_LCT_AccountPortal_+_EIK_ECT_EPIC";
 			bAutoLoginInProgress = true;
 			Login(0,TempDetails);
 			bAutoLoginAttempted = true;

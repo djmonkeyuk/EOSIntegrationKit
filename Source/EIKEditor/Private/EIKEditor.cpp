@@ -1,8 +1,9 @@
-﻿ // Copyright (c) 2024 Betide Studio. All Rights Reserved.
+ // Copyright (c) 2024 Betide Studio. All Rights Reserved.
 
 #include "EIKEditor.h"
 
-#include "DesktopPlatformModule.h"
+#include "DesktopPlatform/Public/IDesktopPlatform.h"
+#include "DesktopPlatform/Public/DesktopPlatformModule.h"
 #include "ToolMenus.h"
 #include "SlateCore.h"
 #include "EditorStyle.h"

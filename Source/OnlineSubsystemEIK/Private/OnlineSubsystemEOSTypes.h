@@ -41,7 +41,7 @@ public:
 	virtual const uint8* GetBytes() const override;
 	virtual int32 GetSize() const override;
 	virtual bool IsValid() const override;
-#if ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
 	virtual uint32 GetTypeHash() const override;
 #else
 	virtual uint32 GetTypeHash() const;

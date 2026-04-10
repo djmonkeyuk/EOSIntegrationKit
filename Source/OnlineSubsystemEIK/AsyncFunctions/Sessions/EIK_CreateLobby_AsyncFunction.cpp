@@ -1,4 +1,4 @@
-﻿// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 
 #include "EIK_CreateLobby_AsyncFunction.h"
@@ -42,7 +42,7 @@ void UEIK_CreateLobby_AsyncFunction::CreateLobby()
 				}
 				LocalMemberSettings.Add(SubsystemRef->GetIdentityInterface()->GetUniquePlayerId(0).ToSharedRef(), LocalSessionSettings);
 			}
-#if ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
 			SessionCreationInfo.SessionIdOverride = Var_CreateLobbySettings.LobbyIDOverride;
 			SessionCreationInfo.Set(SETTING_HOST_MIGRATION, Var_CreateLobbySettings.bSupportHostMigration, EOnlineDataAdvertisementType::ViaOnlineService);
 #else

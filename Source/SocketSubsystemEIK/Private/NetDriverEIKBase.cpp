@@ -12,8 +12,10 @@
 #include "Engine/Engine.h"
 #include "Misc/ConfigCacheIni.h"
 
-#if ENGINE_MAJOR_VERSION >= 5
-#include UE_INLINE_GENERATED_CPP_BY_NAME(NetDriverEIKBase)
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 1
+	#include UE_INLINE_GENERATED_CPP_BY_NAME(NetDriverEIKBase)
+// #else
+// 	#include "NetDriverEIKBase.gen.cpp"
 #endif
 
 UNetDriverEIKBase::UNetDriverEIKBase(const FObjectInitializer& ObjectInitializer)

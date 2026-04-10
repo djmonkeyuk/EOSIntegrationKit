@@ -1389,7 +1389,7 @@ void FEOSVoiceChatUser::ApplySendingOptions(FChannelSession& ChannelSession)
 		(TransmitState.Mode == EVoiceChatTransmitMode::Channel && TransmitState.ChannelName == ChannelSession.ChannelName);
 #endif
 
-#if ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
 	ChannelSession.DesiredSendingState.bAudioEnabled = bCanTransmitToChannel && !AudioInputOptions.bMuted && !ChannelSession.bIsNotListening;
 #else
 	ChannelSession.DesiredSendingState.bAudioEnabled = !AudioInputOptions.bMuted && !ChannelSession.bIsNotListening;

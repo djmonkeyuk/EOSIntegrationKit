@@ -4,7 +4,7 @@
 #include "NetDriverEIKBase.h"
 #include "InternetAddrEIK.h"
 #include "SocketEIK.h"
-#if ENGINE_MAJOR_VERSION >= 5
+#if ENGINE_MAJOR_VERSION >= 5 && ENGINE_MINOR_VERSION >= 1
 #include UE_INLINE_GENERATED_CPP_BY_NAME(NetConnectionEIK)
 #else
 #include "OnlineSubsystem.h"
@@ -71,7 +71,7 @@ void UNetConnectionEIK::CleanUp()
 
 void UNetConnectionEIK::DestroyEOSConnection()
 {
-#if ENGINE_MAJOR_VERSION == 5
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 1
 	FSocket* CurSocket = GetSocket();
 #else
 	if (!Socket)
