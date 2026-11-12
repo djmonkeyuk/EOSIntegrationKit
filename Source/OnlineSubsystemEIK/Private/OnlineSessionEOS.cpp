@@ -2670,7 +2670,7 @@ bool FOnlineSessionEOS::JoinSession(int32 PlayerNum, FName SessionName, const FO
 			}
 			else
 			{
-				UE_LOG_ONLINE_SESSION(Warning, TEXT("Invalid session info on search result"), *SessionName.ToString());
+				UE_LOG_ONLINE_SESSION(Warning, TEXT("Invalid session info on search result: %s"), *SessionName.ToString());
 			}
 		}
 		else

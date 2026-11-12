@@ -54,6 +54,11 @@ public:
 	virtual FOnVoiceChatChannelJoinedDelegate& OnVoiceChatChannelJoined() override { return OnVoiceChatChannelJoinedDelegate; }
 	virtual FOnVoiceChatChannelExitedDelegate& OnVoiceChatChannelExited() override { return OnVoiceChatChannelExitedDelegate; }
 	virtual FOnVoiceChatCallStatsUpdatedDelegate& OnVoiceChatCallStatsUpdated() override { return OnVoiceChatCallStatsUpdatedDelegate; }
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 8
+	virtual FOnVoiceChatCallStatsUpdatedDelegate2& OnVoiceChatCallStatsUpdated2() override { return OnVoiceChatCallStatsUpdatedDelegate2; }
+	// Not supported: this implementation never produces call stats (OnVoiceChatCallStatsUpdatedDelegate is never broadcast either).
+	virtual TOptional<FVoiceChatCallStats> GetChannelCallStats(const FString& ChannelName) const override { return TOptional<FVoiceChatCallStats>(); }
+#endif
 #if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 6
 	virtual void Set3DPosition(const FString& ChannelName, const FVector& Position) override;
 #else
@@ -103,8 +108,17 @@ public:
 	virtual FDelegateHandle RegisterOnVoiceChatBeforeCaptureAudioSentDelegate(const FOnVoiceChatBeforeCaptureAudioSentDelegate::FDelegate& Delegate) override;
 	virtual void UnregisterOnVoiceChatBeforeCaptureAudioSentDelegate(FDelegateHandle Handle) override;
 #endif
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 8
+	// EOS RTC delivers audio per-speaker before mixing, which maps to the Unmixed delegate below.
+	// We don't have a separate post-mix feed, so the Mixed delegate is a no-op stub.
+	virtual FDelegateHandle RegisterOnVoiceChatBeforeRecvMixedAudioRenderedDelegate(const FOnVoiceChatBeforeRecvAudioRenderedDelegate::FDelegate& Delegate) override;
+	virtual void UnregisterOnVoiceChatBeforeRecvMixedAudioRenderedDelegate(FDelegateHandle Handle) override;
+	virtual FDelegateHandle RegisterOnVoiceChatBeforeRecvUnmixedAudioRenderedDelegate(const FOnVoiceChatBeforeRecvAudioRenderedDelegate::FDelegate& Delegate) override;
+	virtual void UnregisterOnVoiceChatBeforeRecvUnmixedAudioRenderedDelegate(FDelegateHandle Handle) override;
+#else
 	virtual FDelegateHandle RegisterOnVoiceChatBeforeRecvAudioRenderedDelegate(const FOnVoiceChatBeforeRecvAudioRenderedDelegate::FDelegate& Delegate) override;
 	virtual void UnregisterOnVoiceChatBeforeRecvAudioRenderedDelegate(FDelegateHandle Handle) override;
+#endif
 	virtual FDelegateHandle RegisterOnVoiceChatDataReceivedDelegate(const FOnVoiceChatDataReceivedDelegate::FDelegate& Delegate);
 	virtual void UnregisterOnVoiceChatDataReceivedDelegate(FDelegateHandle Handle);
 	virtual FString InsecureGetLoginToken(const FString& PlayerName) override;
@@ -314,6 +328,9 @@ protected:
 	FOnVoiceChatPlayerVolumeUpdatedDelegate OnVoiceChatPlayerVolumeUpdatedDelegate;
 	FOnVoiceChatPlayerRemovedDelegate OnVoiceChatPlayerRemovedDelegate;
 	FOnVoiceChatCallStatsUpdatedDelegate OnVoiceChatCallStatsUpdatedDelegate;
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 8
+	FOnVoiceChatCallStatsUpdatedDelegate2 OnVoiceChatCallStatsUpdatedDelegate2;
+#endif
 
 	// IVoiceChatUser Recording Delegates
 	FCriticalSection AudioRecordLock;

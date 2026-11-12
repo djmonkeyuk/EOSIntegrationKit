@@ -945,6 +945,31 @@ void FEOSVoiceChatUser::UnregisterOnVoiceChatBeforeCaptureAudioSentDelegate(FDel
 	OnVoiceChatBeforeCaptureAudioSentDelegate.Remove(Handle);
 }
 
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 8
+FDelegateHandle FEOSVoiceChatUser::RegisterOnVoiceChatBeforeRecvMixedAudioRenderedDelegate(const FOnVoiceChatBeforeRecvAudioRenderedDelegate::FDelegate& Delegate)
+{
+	// Not supported: EOS RTC only gives us per-speaker audio before mixing (see the Unmixed delegate).
+	return FDelegateHandle();
+}
+
+void FEOSVoiceChatUser::UnregisterOnVoiceChatBeforeRecvMixedAudioRenderedDelegate(FDelegateHandle Handle)
+{
+}
+
+FDelegateHandle FEOSVoiceChatUser::RegisterOnVoiceChatBeforeRecvUnmixedAudioRenderedDelegate(const FOnVoiceChatBeforeRecvAudioRenderedDelegate::FDelegate& Delegate)
+{
+	FScopeLock Lock(&BeforeRecvAudioRenderedLock);
+
+	return OnVoiceChatBeforeRecvAudioRenderedDelegate.Add(Delegate);
+}
+
+void FEOSVoiceChatUser::UnregisterOnVoiceChatBeforeRecvUnmixedAudioRenderedDelegate(FDelegateHandle Handle)
+{
+	FScopeLock Lock(&BeforeRecvAudioRenderedLock);
+
+	OnVoiceChatBeforeRecvAudioRenderedDelegate.Remove(Handle);
+}
+#else
 FDelegateHandle FEOSVoiceChatUser::RegisterOnVoiceChatBeforeRecvAudioRenderedDelegate(const FOnVoiceChatBeforeRecvAudioRenderedDelegate::FDelegate& Delegate)
 {
 	FScopeLock Lock(&BeforeRecvAudioRenderedLock);
@@ -958,6 +983,7 @@ void FEOSVoiceChatUser::UnregisterOnVoiceChatBeforeRecvAudioRenderedDelegate(FDe
 
 	OnVoiceChatBeforeRecvAudioRenderedDelegate.Remove(Handle);
 }
+#endif
 
 FDelegateHandle FEOSVoiceChatUser::RegisterOnVoiceChatDataReceivedDelegate(const FOnVoiceChatDataReceivedDelegate::FDelegate& Delegate)
 {
